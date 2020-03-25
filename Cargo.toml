@@ -1,5 +1,5 @@
 [workspace]
 
 members = [
-    "slothbear-worker-service",
+    "slothbear-worker-service"
 ]
