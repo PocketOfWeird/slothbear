@@ -34,3 +34,12 @@ fn default_frame_step() -> i32 {
 fn default_split_chunks() -> i32 {
     5
 }
+
+// Derive JsonSchema for and request/response models
+#[derive(Serialize, Deserialize, JsonSchema)]
+// Set camelCase for derived Json
+#[serde(rename_all = "camelCase")]
+pub struct RenderResponse {
+    pub job_id: Option<String>,
+    pub status: String
+}

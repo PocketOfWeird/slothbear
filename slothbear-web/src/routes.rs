@@ -1,6 +1,6 @@
 use rocket_contrib::json::Json;
 
-use crate::models::{Render};
+use crate::models::{Render, RenderResponse};
 
 
 // GET: /slothbear
@@ -12,7 +12,10 @@ pub fn index() -> &'static str {
 
 // POST: /slothbear/render
 #[openapi]
-#[post("/render", data = "<render>")]
-pub fn post_render(render: Json<Render>) -> Json<Render> {
-    render
+#[post("/render", data = "<_render>")]
+pub fn post_render(_render: Json<Render>) -> Json<RenderResponse> {
+    Json(RenderResponse {
+        job_id: Some("abc123".to_owned()),
+        status: "success".to_owned(),
+    })
 }

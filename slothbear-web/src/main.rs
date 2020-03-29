@@ -8,15 +8,6 @@ extern crate rocket_okapi;
 extern crate serde;
 extern crate schemars;
 
-/*
-#[cfg(test)]
-#[macro_use]
-extern crate assert_json_diff;
-#[cfg(test)] 
-#[macro_use]
-extern crate serde_json;
-*/
-
 use rocket_contrib::serve::StaticFiles;
 
 #[cfg(test)] 

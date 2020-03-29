@@ -6,7 +6,7 @@ use crate::routes;
 
 fn start_client() -> Client {
     let rocket = rocket::ignite().mount( 
-        "/", 
+        "/slothbear", 
         routes_with_openapi![
                 routes::index, 
                 routes::post_render,
@@ -19,7 +19,7 @@ fn start_client() -> Client {
 #[test]
 fn test_index() {
     let client = start_client();
-    let response = client.get("/").dispatch();
+    let response = client.get("/slothbear").dispatch();
     assert_eq!(response.status(), Status::Ok);
 }
 
@@ -38,32 +38,13 @@ fn test_post_render() {
             "frameHeight": 1080,
             "frames": "1-240"
         }
-    "#;
-/* 
-    let assumed_response = json!(
-        {
-            "renderer":"Arnold",
-            "pathProject": "Hartzler/MyAnimation",
-            "pathOutput": "Hartzler/MyAnimation/images/first_try",
-            "pathScene": "Hartzler/MyAnimation/scenes/awesomesauce.mb",
-            "outputFileName": "awesome",
-            "camera": "persp01",
-            "frameWidth": 1920,
-            "frameHeight": 1080,
-            "frames": "1-240",
-            "frame_step": 1,
-            "split_chunks": 5,
-            "rpUser": null,
-            "rpJobName": null
-        }
-    );
- */    
-    let /* mut */ response = client.post("/slothbear/render")
+    "#; 
+    let mut response = client.post("/slothbear/render")
                                 .header(ContentType::JSON)
                                 .body(request_body).dispatch();
     
 
     assert_eq!(response.status(), Status::Ok);
-/*    let body = response.body().unwrap().into_string().unwrap();
-    assert_json_include!(actual: json!(body), expected: assumed_response); */
+    let body = response.body().unwrap().into_string().unwrap();
+    assert!(body.contains(&"success".to_owned()));
 }
