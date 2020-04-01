@@ -1,7 +1,7 @@
 use rocket_contrib::json::Json;
 
 use crate::models::{Render, RenderResponse};
-
+use crate::service::send_to_rp;
 
 // GET: /slothbear
 #[openapi(skip)]
@@ -12,10 +12,9 @@ pub fn index() -> &'static str {
 
 // POST: /slothbear/render
 #[openapi]
-#[post("/render", data = "<_render>")]
-pub fn post_render(_render: Json<Render>) -> Json<RenderResponse> {
-    Json(RenderResponse {
-        job_id: Some("abc123".to_owned()),
-        status: "success".to_owned(),
-    })
+#[post("/render", format = "json", data = "<render>")]
+pub fn post_render(render: Json<Render>) -> Json<RenderResponse> {
+    let new_render = Render::from_json(render);
+    let response = send_to_rp(new_render);
+    return Json(response);
 }

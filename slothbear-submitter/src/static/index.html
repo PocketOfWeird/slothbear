@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Slothbear Submitter</title>
+    <link rel="stylesheet" href="https://unpkg.com/turretcss/dist/turretcss.min.css" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container" aria-hidden="true">
+        <p>Farm Status: <span>Online</span></p>
+        <form>
+            <p class="field">
+            <label for="path_project">Relative Path to Project Directory</label>
+            <input type="text" id="path_project" class="listen" placeholder="Smith\MyAnimation" />
+            </p>
+            <p class="field">
+            <label for="path_scene">Relative Path to Scene</label>
+            <input type="text" id="path_scene" class="listen" placeholder="Smith\MyAnimation\scenes\awesomesauce.mb" />
+            </p>
+            <p class="field">
+                <label for="path_output">Relative Path to Output Image Directory</label>
+                <input type="text" id="path_output" class="listen" placeholder="Smith\MyAnimation\images\firstTry" />
+            </p>
+            <p class="field">
+                <label for="output_file_name">Output Image Leading Text</label>
+                <input type="text" id="output_file_name" class="listen" placeholder="awesome" />
+            </p>
+            <p class="field">
+                <label for="camera">Camera</label>
+                <input type="text" id="camera" class="listen" placeholder="persp1;top;bottom" />
+            </p>
+            <p class="field">
+                <label for="frames">Frames</label>
+                <input type="text" id="frames" class="listen" placeholder="1-20;35-79;88-240" />
+            </p>
+            <p class="field">
+                <label for="frame_width">Frame Width (pixels)</label>
+                <input type="text" id="frame_width" class="listen" placeholder="1920" />
+            </p>
+            <p class="field">
+                <label for="frame_height">Frame Height (pixels)</label>
+                <input type="text" id="frame_height" class="listen" placeholder="1080" />
+            </p>
+            <p class="field">
+                <label for="rp_user">RenderPal Username</label>
+                <input type="text" id="rp_user" class="listen" placeholder="If you want notifications, enter your RP Username" />
+            </p>
+            <p class="field">
+            <button type="button" id="submitBtn" class="button">Submit</button>
+            </p>
+        </form>
+    </div> 
+</body>
+<script type="text/javascript">
+  'use strict';
+  (function(){
+    let newRender = {};
+
+    function addData(key, data) {
+        newRender[key] = data;
+    }
+
+    function submitData() {
+        window.external.invoke(JSON.stringify(newRender));
+    }
+
+    function ready(fn) {
+        if (document.readyState != 'loading') {
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
+    }
+
+    function main() {
+        var inputs = document.getElementsByClassName('listen');
+        Array.prototype.forEach.call(inputs, function(input, i) {
+            input.addEventListener('change', function(e){ addData(input.id, input.value) });
+        });
+
+        var submitBtn = document.getElementById('submitBtn');
+        submitBtn.addEventListener('click', submitData);
+    }
+
+    ready(main);
+  })();
+</script>
+<!--<script src="index.js"></script>-->
+</html>

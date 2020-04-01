@@ -15,6 +15,7 @@ mod tests;
 
 mod models;
 mod routes;
+mod service;
 
 
 fn main() {
