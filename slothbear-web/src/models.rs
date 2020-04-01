@@ -15,11 +15,11 @@ pub struct Render {
     pub camera: String,
     pub frames: String,
     #[serde(default = "default_frame_step")]
-    pub frame_step: i32,
-    pub frame_width: i32,
-    pub frame_height: i32,
+    pub frame_step: i16,
+    pub frame_width: i16,
+    pub frame_height: i16,
     #[serde(default = "default_split_chunks")]
-    pub split_chunks: i32,
+    pub split_chunks: i16,
     pub rp_user: Option<String>,
     pub rp_job_name: Option<String>,
 }
@@ -28,10 +28,10 @@ pub struct Render {
 fn default_renderer() -> String {
     "Arnold".to_string()
 }
-fn default_frame_step() -> i32 {
+fn default_frame_step() -> i16 {
     1
 }
-fn default_split_chunks() -> i32 {
+fn default_split_chunks() -> i16 {
     5
 }
 
