@@ -5,6 +5,7 @@ extern crate rocket;
 extern crate rocket_contrib;
 #[macro_use]
 extern crate rocket_okapi;
+extern crate rand;
 extern crate serde;
 extern crate schemars;
 

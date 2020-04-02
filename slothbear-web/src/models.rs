@@ -62,5 +62,7 @@ impl Render {
 #[serde(rename_all = "camelCase")]
 pub struct RenderResponse {
     pub job_id: Option<String>,
-    pub status: String
+    pub status: String,
+    pub stdout: Option<String>,
+    pub stderr: Option<String>,
 }

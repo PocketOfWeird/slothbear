@@ -9,23 +9,23 @@
   </head>
   <body>
     <div class="container" aria-hidden="true">
-        <p>Farm Status: <span>Online</span></p>
+        <p>Farm Status: <span id="farmStatus"></span></p>
         <form>
             <p class="field">
             <label for="path_project">Relative Path to Project Directory</label>
-            <input type="text" id="path_project" class="listen" placeholder="Smith\MyAnimation" />
+            <input type="text" id="pathProject" class="listen" placeholder="Smith\MyAnimation" />
             </p>
             <p class="field">
             <label for="path_scene">Relative Path to Scene</label>
-            <input type="text" id="path_scene" class="listen" placeholder="Smith\MyAnimation\scenes\awesomesauce.mb" />
+            <input type="text" id="pathScene" class="listen" placeholder="Smith\MyAnimation\scenes\awesomesauce.mb" />
             </p>
             <p class="field">
                 <label for="path_output">Relative Path to Output Image Directory</label>
-                <input type="text" id="path_output" class="listen" placeholder="Smith\MyAnimation\images\firstTry" />
+                <input type="text" id="pathOutput" class="listen" placeholder="Smith\MyAnimation\images\firstTry" />
             </p>
             <p class="field">
                 <label for="output_file_name">Output Image Leading Text</label>
-                <input type="text" id="output_file_name" class="listen" placeholder="awesome" />
+                <input type="text" id="outputFileName" class="listen" placeholder="awesome" />
             </p>
             <p class="field">
                 <label for="camera">Camera</label>
@@ -37,15 +37,15 @@
             </p>
             <p class="field">
                 <label for="frame_width">Frame Width (pixels)</label>
-                <input type="text" id="frame_width" class="listen" placeholder="1920" />
+                <input type="text" id="frameWidth" class="listen" placeholder="1920" />
             </p>
             <p class="field">
                 <label for="frame_height">Frame Height (pixels)</label>
-                <input type="text" id="frame_height" class="listen" placeholder="1080" />
+                <input type="text" id="frameHeight" class="listen" placeholder="1080" />
             </p>
             <p class="field">
                 <label for="rp_user">RenderPal Username</label>
-                <input type="text" id="rp_user" class="listen" placeholder="If you want notifications, enter your RP Username" />
+                <input type="text" id="rpUser" class="listen" placeholder="If you want notifications, enter your RP Username" />
             </p>
             <p class="field">
             <button type="button" id="submitBtn" class="button">Submit</button>
@@ -75,6 +75,9 @@
     }
 
     function main() {
+        var farmStatus = document.getElementById('farmStatus');
+        farmStatus.innerHTML = window.external//.farmStatus;
+
         var inputs = document.getElementsByClassName('listen');
         Array.prototype.forEach.call(inputs, function(input, i) {
             input.addEventListener('change', function(e){ addData(input.id, input.value) });

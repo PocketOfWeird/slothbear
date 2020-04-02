@@ -1,6 +1,7 @@
 extern crate web_view;
 extern crate serde;
 extern crate blake3;
+extern crate minreq;
 #[macro_use]
 extern crate serde_json;
 
@@ -12,6 +13,7 @@ use std::fmt::Display;
 use std::str::FromStr;
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NewRender {
     pub path_scene: String,
     pub path_output: String,
@@ -39,10 +41,14 @@ where
 
 fn submit_new_render(json: &str) {
     let new_render: NewRender = serde_json::from_str(json).unwrap();
-    let header = json!({
-        "Authorization": format!("Bearer {:?}", blake3::hash(secret::get_token_secret()))
-    });
-    println!("{:?}", header);
+    let response = minreq::post("http://localhost:8000/slothbear/render")
+            .with_header("Content-Type", "application/json")
+            .with_header("Authorization", format!("Bearer {:?}", blake3::hash(secret::get_token_secret())))
+            .with_json(&new_render)
+            .unwrap()
+            .send()
+            .unwrap();
+    println!("Response: {}", response.as_str().unwrap());
 }
 
 fn main() {
@@ -52,7 +58,7 @@ fn main() {
         .size(800, 900)
         .resizable(true)
         .debug(true)
-        .user_data(())
+        .user_data(json!({"farmStatus": "Onlineish"}))
         .invoke_handler(|webview, arg| { 
             submit_new_render(&arg);
             Ok(())
