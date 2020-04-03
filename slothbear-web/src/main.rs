@@ -9,8 +9,6 @@ extern crate rand;
 extern crate serde;
 extern crate schemars;
 
-use rocket_contrib::serve::StaticFiles;
-
 #[cfg(test)] 
 mod tests;
 
@@ -27,6 +25,6 @@ fn main() {
                 routes::index, 
                 routes::post_render,
             ]
-    ).mount("/", StaticFiles::from("public"))
+    )
     .launch();
 }
