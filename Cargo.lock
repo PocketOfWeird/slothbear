@@ -972,11 +972,7 @@ version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "slothbear-cub"
-version = "0.1.0"
-
-[[package]]
-name = "slothbear-mamma"
+name = "slothbear-api"
 version = "0.1.0"
 dependencies = [
  "okapi 0.4.0 (git+https://github.com/GREsau/okapi)",
@@ -988,6 +984,14 @@ dependencies = [
  "schemars 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.105 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "slothbear-cub"
+version = "0.1.0"
+
+[[package]]
+name = "slothbear-mamma"
+version = "0.1.0"
 
 [[package]]
 name = "slothbear-submitter"

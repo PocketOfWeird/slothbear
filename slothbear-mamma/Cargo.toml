@@ -7,19 +7,3 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# change this dependency once at least version 0.4.0 is released https://crates.io/crates/okapi
-okapi = { git = "https://github.com/GREsau/okapi" }
-rocket = { version = "0.4.4", default-features = false }
-# change this dependency once at least version 0.4.0 is released https://crates.io/crates/rocket_okapi
-rocket_okapi = { git = "https://github.com/GREsau/okapi" }
-serde = "1.0"
-schemars = "0.7.0"
-rand = "0.7.3"
-
-[dependencies.rocket_contrib]
-version = "0.4.4"
-default-features = false
-features = ["json", "serve"]
-
-[dev-dependencies]
-pretty_assertions = "0.6.1"
