@@ -1,5 +1,5 @@
 [package]
-name = "slothbear-worker-service"
+name = "slothbear-cub"
 version = "0.1.0"
 authors = ["Pocket Of Weird <hartzlernathan@gmail.com>"]
 edition = "2018"

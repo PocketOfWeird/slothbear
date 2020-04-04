@@ -1,7 +1,7 @@
 [workspace]
 
 members = [
+    "slothbear-mamma",
     "slothbear-submitter",
-    "slothbear-web",
-    "slothbear-worker-service"
+    "slothbear-cub",
 ]
