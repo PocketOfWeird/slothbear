@@ -1,20 +1,45 @@
-use std::process::Command;
-use std::io::{self, Write};
+extern crate hostname;
+extern crate pickledb;
+extern crate serde;
+
+use pickledb::{PickleDb, PickleDbDumpPolicy, SerializationMethod, error::Error};
+use serde::{Deserialize, Serialize};
+use std::path::Path;
+
+#[derive(Serialize, Deserialize)]
+struct RenderJob {
+    id: String,
+}
+
+fn load_db() -> Result<PickleDb, Error> {
+    let filename = "slothbear-cub.db";
+    if Path::new(filename).exists() {
+        return PickleDb::load(filename, PickleDbDumpPolicy::AutoDump, SerializationMethod::Bin);
+    } else {
+        return Ok(PickleDb::new(filename, PickleDbDumpPolicy::AutoDump, SerializationMethod::Bin));
+    }
+}
 
 fn main() {
-    let mut say_hello = Command::new("cmd");
-    say_hello.arg("/c").arg("echo hello");
+    let mut db = load_db().expect("Unable to load the local database file");
+    
+    // Check Hostname
+    let hname = db.get::<String>("hostname");
+    if !hname.is_some() {
+        let name = hostname::get().expect("Unable to retrieve computer hostname").into_string().expect("Unable to convert computer hostname");
+        db.set("hostname", &name).unwrap();
+    }
+    println!("slothbear-cub: hostname is {}", db.get::<String>("hostname").unwrap());
 
-    println!("Starting Command");
+    // Check config file if we are a Renderer or not
 
-    let hello_1 = say_hello.output().expect("failed to execute cmd");
-    let hello_2 = say_hello.output().expect("failed to execute cmd");
-
-    println!("hello_1 status: {}", hello_1.status);
-    println!("hello_2 status: {}", hello_2.status);
-    io::stdout().write_all(&hello_1.stdout).unwrap();
-    io::stderr().write_all(&hello_1.stderr).unwrap();
-    io::stdout().write_all(&hello_2.stdout).unwrap();
-    io::stderr().write_all(&hello_2.stderr).unwrap();
-
+    // Check if we halted mid-job
+    let leftover_job = db.get::<RenderJob>("job_current");
+    if leftover_job.is_some() {
+        // start the render job again
+    }
+    // Check if queue exists
+    if db.lexists("jobs_todo") {
+        // ?
+    }
 }

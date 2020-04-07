@@ -13,18 +13,13 @@
     <meta property="fb:app_id" content="98858572066">
     <meta name="twitter:card" content="summary_large_image">
     <meta itemprop="name" content="Computer Animation Render System">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/render/favicon.ico" type="image/x-icon">
     <link rel="Stylesheet" media="all" href="https://missouristate.info/msuwds/v2/styles/main-sgf.css" />
     <style>
         /*<img src="../../images/facebook_share.jpg" width="1200" height="630" />*/
     </style>
     <!--MSU Scripts-->
     <script src="https://missouristate.info/msuwds/v2/scripts/common.js"></script>
-    <!-- Microsoft Azure Authentication - msal.js with a fallback to backup CDN -->
-    <script type="text/javascript" src="https://alcdn.msauth.net/lib/1.2.2/js/msal.js" integrity="sha384-n2/wxR+doMGeL8Lmj4kdPRfZBUg2d/OAVqaKCoHPWOfOs1HUFU3laBvp3gv/HBOu" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-      if(typeof Msal === 'undefined')document.write(unescape("%3Cscript src='https://alcdn.msftauth.net/lib/1.2.2/js/msal.js' type='text/javascript' integrity='sha384-n2/wxR+doMGeL8Lmj4kdPRfZBUg2d/OAVqaKCoHPWOfOs1HUFU3laBvp3gv/HBOu' crossorigin='anonymous'%3E%3C/script%3E"));
-    </script>
 </head>
 
 <body class="basic ">
@@ -237,7 +232,7 @@
                       <h2 class="headline">Slothbear</h2>
                       <ul>
                           <li class="hide-if-authenticated">
-                            <a href="#">Login</a>
+                            <a href="/render/auth/login">Login</a>
                           </li>
                           <li class="show-if-authenticated" aria-hidden="true" style="display:none;">
                             <a href="/render/app/jobs">Your Render Jobs</a>
@@ -315,11 +310,11 @@
         <div class="grid_inner">
           <div class="ContentBlock tout Horz">
             <div class="image-container">
-              <img class="image" src="index.jpg" alt="Sloth Bear laying on a rock">
+              <img class="image" src="/render/index.jpg" alt="Sloth Bear laying on a rock">
             </div>
             <div class="container">
                 <h3 class="headline">
-                  <a href="javascript:logIn()" class="hide-if-authenticated">
+                  <a href="/render/auth/login" class="hide-if-authenticated">
                     Login
                   </a>
                   <a href="/render/app/jobs" class="show-if-authenticated" aria-hidden="true" style="display:none;">
@@ -451,10 +446,7 @@
     </div>
   </div>
   <script src="https://missouristate.info/msuwds/v2/scripts/components/back-to-top.js"></script>
-  <script src="authConfig.js"></script>
-  <script src="index.js"></script>
-  <!--Remove login.js call for Production-->
-  <script src="login/login.js"></script>
+  <script src="/render/index.js"></script>
 </body>
 
 </html>

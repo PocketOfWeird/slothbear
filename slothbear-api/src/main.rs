@@ -9,6 +9,10 @@ extern crate rand;
 extern crate serde;
 extern crate schemars;
 
+use rocket::config::Config;
+use rocket_contrib::serve::StaticFiles;
+use std::env;
+
 #[cfg(test)] 
 mod tests;
 
@@ -18,12 +22,31 @@ mod service;
 
 
 fn main() {
-    rocket::ignite()
+    let port: u16 = match env::var("HTTP_PLATFORM_PORT") {
+        Ok(val) => val.parse().unwrap(),
+        Err(_e) => 8000,
+    };
+    let static_dir: String = match env::var("ROCKET_STATIC_DIR") {
+        Ok(val) => val.to_string(),
+        Err(_e) => "static".to_string(),
+    };
+
+    let mut config = Config::active().unwrap();
+    config.set_port(port);
+
+    rocket::custom(config)
+    .mount("/render", StaticFiles::from(static_dir))
+    .mount("/render/auth", routes![
+            routes::auth_login,
+            routes::auth_logout,
+            routes::auth_callback,
+        ]
+    )
     .mount( 
-        "/slothbear", 
+        "/render/api", 
         routes_with_openapi![
                 routes::index, 
-                routes::post_render,
+                routes::post_job,
             ]
     )
     .launch();
