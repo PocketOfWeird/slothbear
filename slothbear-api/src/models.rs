@@ -66,3 +66,56 @@ pub struct RenderResponse {
     pub stdout: Option<String>,
     pub stderr: Option<String>,
 }
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename = "serviceResponse")]
+pub struct CasServiceResponse {
+    #[serde(rename = "authenticationSuccess")]
+    pub authentication_success: CasAuthenticationSuccess,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename = "authenticationSuccess")]
+pub struct CasAuthenticationSuccess {
+    pub user: String,
+    pub attributes: CasAttributesMSU,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename = "attributes")]
+pub struct CasAttributesMSU {
+    pub first_name: String,
+    pub last_name: String,
+    pub name: String,
+    pub email: String,
+    #[serde(rename = "bearpass_Login")]
+    pub bearpass_login: String,
+    #[serde(rename = "bearpass_EmailID")]
+    pub bearpass_email_id: String,
+    pub primary_role: String,
+    pub campus: String,
+    #[serde(default, rename = "isFaculty")]
+    pub is_faculty: Option<String>,
+    #[serde(default, rename = "isStudent")]
+    pub is_student: Option<String>,
+    #[serde(default, rename = "isStaff")]
+    pub is_staff: Option<String>,
+}
+
+// Derive JsonSchema for and request/response models
+#[derive(Serialize, Deserialize, JsonSchema)]
+pub struct User {
+    pub id: String,
+    pub fname: String,
+    pub lname: String,
+    pub email: String,
+}
+impl User {
+    pub fn from_cas_attributes_msu(cas: CasAttributesMSU) -> User {
+        return User {
+            id: cas.bearpass_login,
+            fname: cas.first_name,
+            lname: cas.last_name,
+            email: cas.email
+        };
+    }
+}

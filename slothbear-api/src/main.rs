@@ -5,8 +5,10 @@ extern crate rocket;
 extern crate rocket_contrib;
 #[macro_use]
 extern crate rocket_okapi;
+extern crate minreq;
 extern crate rand;
 extern crate serde;
+extern crate serde_xml_rs;
 extern crate schemars;
 
 use rocket::config::Config;
@@ -49,5 +51,6 @@ fn main() {
                 routes::post_job,
             ]
     )
+    .register(catchers![routes::not_found])
     .launch();
 }

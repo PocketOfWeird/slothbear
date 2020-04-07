@@ -9,7 +9,7 @@ fn start_client() -> Client {
         "/slothbear", 
         routes_with_openapi![
                 routes::index, 
-                routes::post_render,
+                routes::post_job,
             ]
     );
     let client = Client::new(rocket).expect("valid rocket instance");
