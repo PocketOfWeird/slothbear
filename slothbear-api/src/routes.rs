@@ -3,18 +3,10 @@ use rocket::http::uri::Uri;
 use rocket_contrib::json::Json;
 use minreq;
 use serde_xml_rs;
-use std::env;
 
+use crate::helper;
 use crate::models::{CasServiceResponse, Render, RenderResponse, User};
 use crate::service::send_to_rp;
-
-// -- Helper Functions -- //
-fn get_app_base() -> String {
-    env::var("ROCKET_APP_BASE").unwrap_or_default()
-}
-fn get_cas_base() -> String {
-    env::var("ROCKET_CAS_BASE").unwrap_or_default()
-}
 
 // GET: /api
 #[openapi(skip)]
@@ -38,11 +30,11 @@ pub fn auth_login() -> Redirect {
     Redirect::to(
         format!(
             "{}/login?service={}", 
-            &get_cas_base(), 
+            &helper::get_cas_base(), 
             Uri::percent_encode(
                 &format!(
                     "{}/auth/callback",
-                    &get_app_base()
+                    &helper::get_app_base()
                 )
             )
         )
@@ -55,9 +47,9 @@ pub fn auth_logout() -> Redirect {
     Redirect::to(
         format!(
             "{}/logout?url={}", 
-            &get_cas_base(), 
+            &helper::get_cas_base(), 
             Uri::percent_encode(
-                &get_app_base()
+                &helper::get_app_base()
             )
         )
     )
@@ -69,11 +61,11 @@ pub fn auth_callback(ticket: String) -> String {
     // request the cas server to validate the ticket
     let response: String = minreq::get(
         format!("{}/serviceValidate?service={}&ticket={}", 
-            &get_cas_base(), 
+            &helper::get_cas_base(), 
             Uri::percent_encode(
                 &format!(
                     "{}/auth/callback",
-                    &get_app_base()
+                    &helper::get_app_base()
                 )
             ),
             &ticket

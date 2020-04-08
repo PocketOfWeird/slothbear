@@ -18,6 +18,7 @@ use std::env;
 #[cfg(test)] 
 mod tests;
 
+mod helper;
 mod models;
 mod routes;
 mod service;
