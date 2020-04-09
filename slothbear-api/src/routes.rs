@@ -5,14 +5,14 @@ use minreq;
 use serde_xml_rs;
 
 use crate::helper;
-use crate::models::{CasServiceResponse, Render, RenderResponse, User};
+use crate::models::{ApiKey, CasServiceResponse, Render, RenderResponse, User};
 use crate::service::send_to_rp;
 
 // GET: /api
 #[openapi(skip)]
 #[get("/")]
-pub fn index() -> &'static str {
-    "Hello, world!"
+pub fn index(key: ApiKey) -> String {
+    format!("Hello {}", key.user.fname)
 }
 
 // POST: /api/job
@@ -57,7 +57,7 @@ pub fn auth_logout() -> Redirect {
 
 // GET: /auth/callback
 #[get("/callback?<ticket>")]
-pub fn auth_callback(ticket: String) -> String {
+pub fn auth_callback(ticket: String) -> Redirect {
     // request the cas server to validate the ticket
     let response: String = minreq::get(
         format!("{}/serviceValidate?service={}&ticket={}", 
@@ -74,16 +74,37 @@ pub fn auth_callback(ticket: String) -> String {
 
     // check if the xml string has "cas:authenticationFailure"
     if response.contains("cas:authenticationFailure") {
-        return "failure".to_owned();
-        // route to /#casAuthenticateFailure 
+        Redirect::to(
+            format!(
+                "{}/?authentication=failed&message={}",
+                &helper::get_app_base(),
+                Uri::percent_encode("Cas Authentication Failed")
+            )
+        )
     } else {
         // remove the "cas:" prepend from the xml string
         let filtered_response = response.replace("cas:", "");
         // convert the xml string to a CasResponse model
         let cas_response: CasServiceResponse = serde_xml_rs::from_str(&filtered_response).unwrap();
+        // convert CasResponse model to User model
         let user = User::from_cas_attributes_msu(cas_response.authentication_success.attributes);
-        return user.id.to_owned();
-        // route to /#casAuthenticateSuccess
+        // generate and api key and redirect to frontend
+        match helper::generate_api_key(&user) {
+            Ok(api_key) => return Redirect::to(
+                format!(
+                    "{}/?authentication=success&key={}",
+                    &helper::get_app_base(),
+                    api_key
+                )
+            ),
+            Err(e) => return Redirect::to(
+                format!(
+                    "{}/?authentication=failed&message={}",
+                    &helper::get_app_base(), 
+                    Uri::percent_encode(&e.to_string())
+                )
+            )
+        }
     }
 }
 

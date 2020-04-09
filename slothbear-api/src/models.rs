@@ -1,6 +1,13 @@
+use chrono::{Utc};
+use rocket::http::Status;
+use rocket::outcome::Outcome;
+use rocket::request::{self, Request, FromRequest};
 use rocket_contrib::json::Json;
 use serde::{Serialize, Deserialize};
 use schemars::JsonSchema;
+use std::io::{Error, ErrorKind};
+
+use crate::helper;
 
 // Derive JsonSchema for and request/response models
 #[derive(Serialize, Deserialize, JsonSchema)]
@@ -103,19 +110,40 @@ pub struct CasAttributesMSU {
 
 // Derive JsonSchema for and request/response models
 #[derive(Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct User {
     pub id: String,
     pub fname: String,
     pub lname: String,
     pub email: String,
+    pub last_logon: String,
 }
 impl User {
     pub fn from_cas_attributes_msu(cas: CasAttributesMSU) -> User {
+        let current_time = Utc::now().to_string();
         return User {
             id: cas.bearpass_login,
             fname: cas.first_name,
             lname: cas.last_name,
-            email: cas.email
+            email: cas.email,
+            last_logon: current_time,
         };
+    }
+}
+
+pub struct ApiKey {
+    pub user: User
+}
+impl<'a, 'r> FromRequest<'a, 'r> for ApiKey {
+    type Error = std::io::Error;
+
+    fn from_request(request: &'a Request<'r>) -> request::Outcome<Self, std::io::Error> {
+        match request.headers().get_one("X-API-Key") {
+            Some(key) => match helper::verify_api_key(key){
+                Ok(authenticated_user) => Outcome::Success(ApiKey { user: authenticated_user }),
+                Err(_e) => Outcome::Failure((Status::Unauthorized, Error::from(ErrorKind::InvalidInput)))
+            },
+            None => Outcome::Failure((Status::BadRequest, Error::from(ErrorKind::InvalidInput)))
+        }
     }
 }

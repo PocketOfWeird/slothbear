@@ -2,24 +2,24 @@
 <html lang="en" itemscope itemtype="https://schema.org/WebPage">
 <head>
     <meta charset="UTF-8" />
-    <title>Computer Animation Render System</title>
+    <title>Your Render Jobs</title>
     <meta name="description" content="Online Render System Portal for the Art and Design Department at Missouri State University" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-    <meta property="og:title" content="Computer Animation Render System">
+    <meta property="og:title" content="Your Render Jobs">
     <meta property="og:description" content="Online Render System Portal for the Art and Design Department at Missouri State University">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="fb:app_id" content="98858572066">
     <meta name="twitter:card" content="summary_large_image">
-    <meta itemprop="name" content="Computer Animation Render System">
+    <meta itemprop="name" content="Your Render Jobs">
     <link rel="shortcut icon" href="/render/favicon.ico" type="image/x-icon">
     <link rel="Stylesheet" media="all" href="https://missouristate.info/msuwds/v2/styles/main-sgf.css" />
     <style>
         /*<img src="../../images/facebook_share.jpg" width="1200" height="630" />*/
     </style>
-    <!--MSU Scripts-->
     <script src="https://missouristate.info/msuwds/v2/scripts/common.js"></script>
+    <script src="/render/jobs.js"></script>
 </head>
 
 <body class="basic ">
@@ -189,7 +189,7 @@
       <div id="UnitMastheadWrapper" class="UnitMastheadWrapper">
           <div id="UnitMasthead" class="UnitMasthead">
             <div class="SiteTitle">
-                  <a href="https://art-design.missouristate.edu/render">
+                  <a href="/render">
                 Computer Animation Render System
                   </a>
             </div>
@@ -209,9 +209,15 @@
             </a>
             <meta itemprop="position" content="2" />
           </span>
-          <span class="current-page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name">Computer Animation Render System</span>
+          <span class="ancestor" itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement">
+            <a href="/render" itemprop="item">
+              <span itemprop="name">Computer Animation Render System</span>
+            </a>
             <meta itemprop="position" content="3" />
+          </span>
+          <span class="current-page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">Your Render Jobs</span>
+            <meta itemprop="position" content="4" />
           </span>
         </div>
       </nav>
@@ -231,16 +237,13 @@
                     <div class="nav-section">
                       <h2 class="headline">Slothbear</h2>
                       <ul>
-                          <li class="hide-if-authenticated">
-                            <a href="/render/auth/login">Login</a>
-                          </li>
-                          <li class="show-if-authenticated" aria-hidden="true" style="display:none;">
+                          <li>
                             <a href="/render/jobs.html">Your Render Jobs</a>
                           </li>
-                          <li class="show-if-authenticated" aria-hidden="true" style="display:none;">
+                          <li>
                             <a href="/render/new.html">New Render Job</a>
                           </li>
-                          <li class="show-if-authenticated" aria-hidden="true" style="display:none;">
+                          <li>
                             <a href="/render/?logout">Logout</a>
                           </li>
                       </ul>
@@ -303,31 +306,13 @@
     <main id="ContentColumn" class="grid_twothirds ContentColumn">
       <div class="grid_whole">
           <div class="grid_inner">
-            <h1 class="page-title">Computer Animation Render System</h1>
+            <h1 class="page-title">Your Render Jobs</h1>
           </div>
       </div>
-      <div class="Rowstrart grid_whole Page">
-        <div class="grid_inner">
-          <div class="ContentBlock tout Horz">
-            <div class="image-container">
-              <img class="image" src="/render/index.jpg" alt="Sloth Bear laying on a rock">
-            </div>
-            <div class="container">
-                <h3 class="headline">
-                  <a href="/render/auth/login" class="hide-if-authenticated">
-                    Login
-                  </a>
-                  <a href="/render/jobs.html" class="show-if-authenticated" aria-hidden="true" style="display:none;">
-                    Go to Your Render Jobs
-                  </a>
-                </h3>
-                <p class="description">
-                  Slothbear is the Art and Design Department's Computer Animation Render System.
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="loader">
+        <img class="image" src="https://missouristate.info/msuwds/v2/images/loader.gif" alt="Loading spinner">
+        <p class="title">Currently Under Construction</p>
+    </div>
     </main>
   </div>
       
@@ -446,7 +431,6 @@
     </div>
   </div>
   <script src="https://missouristate.info/msuwds/v2/scripts/components/back-to-top.js"></script>
-  <script src="/render/index.js"></script>
 </body>
 
 </html>

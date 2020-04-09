@@ -1,2 +1,3 @@
 static/web.config
 static/web.config.prod
+logs/

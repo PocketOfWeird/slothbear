@@ -2,12 +2,18 @@
 
 #[macro_use] 
 extern crate rocket;
+//#[macro_use]
 extern crate rocket_contrib;
 #[macro_use]
 extern crate rocket_okapi;
+extern crate blake3;
+extern crate chrono;
+extern crate frank_jwt;
 extern crate minreq;
 extern crate rand;
 extern crate serde;
+#[macro_use]
+extern crate serde_json;
 extern crate serde_xml_rs;
 extern crate schemars;
 
@@ -18,9 +24,11 @@ use std::env;
 #[cfg(test)] 
 mod tests;
 
+//mod db;
 mod helper;
 mod models;
 mod routes;
+//mod secret;
 mod service;
 
 
@@ -38,6 +46,7 @@ fn main() {
     config.set_port(port);
 
     rocket::custom(config)
+    /*.attach(db::DbConn::fairing())*/
     .mount("/render", StaticFiles::from(static_dir))
     .mount("/render/auth", routes![
             routes::auth_login,
