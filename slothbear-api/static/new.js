@@ -35,9 +35,12 @@
     function saveRenderJobData(data) {
         var renders = window.localStorage.getItem("slothbear-renders");
         if (!renders) {
-            renders = {};
+            renders = "{}";
         }
+        renders = JSON.parse(renders);
         renders[data.id] = data;
+        renders = JSON.stringify(renders);
+        window.localStorage.setItem("renders", renders);
     }
 
     function addDataToRender(key, data) {
