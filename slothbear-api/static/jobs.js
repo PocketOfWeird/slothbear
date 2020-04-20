@@ -1,13 +1,35 @@
 'use strict';
 (function(){
-    function checkForApiKey() {
-        if (window.localStorage.getItem("slothbear-api-key") === null) {
-            window.location.href = "/render";
-        }
+    function redirectToHome() {
+        window.location.href = "/render";
+    }
+    function decodeApiKey(key) {
+        // Uses external library import, jwt-decode, https://github.com/auth0/jwt-decode
+        return jwt_decode(key);
+    }
+
+    function apiKeyNotExpired(decoded_key) {
+        // Checks if the api key expiration field is greater than the current time + 2 minutes
+        var current_time_in_secs = new Date().getTime() / 1000;
+        var current_time_plus_2 = current_time_in_secs + 120;
+        return decoded_key.exp > current_time_plus_2;
     }
     function getApiKey() {
         return window.localStorage.getItem("slothbear-api-key");
     }
+    function checkForApiKey() {
+        var key = getApiKey();
+        if (key === null) {
+            redirectToHome();
+        } else {
+            var decoded_key = decodeApiKey(key);
+            // if apiKey IS expired (not not)
+            if (!apiKeyNotExpired(decoded_key)) {
+                redirectToHome();
+            }
+        }
+    }
+    
 
     function getRenderJobs() {
         var url = "/render/api/";

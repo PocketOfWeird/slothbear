@@ -2,25 +2,33 @@
 <html lang="en" itemscope itemtype="https://schema.org/WebPage">
 <head>
     <meta charset="UTF-8" />
-    <title>Your Render Jobs</title>
+    <title>New Render Job</title>
     <meta name="description" content="Online Render System Portal for the Art and Design Department at Missouri State University" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-    <meta property="og:title" content="Your Render Jobs">
+    <meta property="og:title" content="New Render Job">
     <meta property="og:description" content="Online Render System Portal for the Art and Design Department at Missouri State University">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
     <meta property="fb:app_id" content="98858572066">
     <meta name="twitter:card" content="summary_large_image">
-    <meta itemprop="name" content="Your Render Jobs">
+    <meta itemprop="name" content="New Render Job">
     <link rel="shortcut icon" href="/render/favicon.ico" type="image/x-icon">
     <link rel="Stylesheet" media="all" href="https://missouristate.info/msuwds/v2/styles/main-sgf.css" />
     <style>
         /*<img src="../../images/facebook_share.jpg" width="1200" height="630" />*/
+      .error {
+        border-color: red;
+      }
+
+      .error-message, .formError {
+        color: red;
+        font-style: italic;
+      }
     </style>
     <script src="https://missouristate.info/msuwds/v2/scripts/common.js"></script>
     <script src="/render/jwt-decode.min.js"></script>
-    <script src="/render/jobs.js"></script>
+    <script src="/render/new.js"></script>
 </head>
 
 <body class="basic ">
@@ -217,7 +225,7 @@
             <meta itemprop="position" content="3" />
           </span>
           <span class="current-page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name">Your Render Jobs</span>
+            <span itemprop="name">New Render Job</span>
             <meta itemprop="position" content="4" />
           </span>
         </div>
@@ -307,13 +315,62 @@
     <main id="ContentColumn" class="grid_twothirds ContentColumn">
       <div class="grid_whole">
           <div class="grid_inner">
-            <h1 class="page-title">Your Render Jobs</h1>
+            <h1 class="page-title">New Render Job</h1>
           </div>
       </div>
-      <div class="loader">
-        <img class="image" src="https://missouristate.info/msuwds/v2/images/loader.gif" alt="Loading spinner">
-        <p class="title">Currently Under Construction</p>
-    </div>
+      <div id="notice_block" class="grid_whole" aria-hidden="true" style="display:none; transition: opacity 1s;">
+        <div class="grid_inner">
+          <article class="ContentBlock Notice">
+            <b><span id="notice_title"></span>:</b>
+            <span id="notice_message"></span>
+          </article>
+        </div>
+      </div>
+      <div class="grid_whole">
+        <div class="grid_inner">
+          <article class="ContentBlock form">
+            <p>Required fields are marked with an asterisk (<abbr class="required" title="required">*</abbr>).</p>
+            <form name="Form_new_render_job" id="newRenderJobForm" class="form-100 FormEmail Page100">
+              <fieldset class="fieldset Page100">
+                <legend>New Render Job Details</legend>
+                <div class="form-control Page1">
+                  <label for="pathProject">Relative Path to Project Directory<abbr class="required" title="required">*</abbr></label>
+                  <input id="pathProject" type="text" name="Field_path_project" class="listen" required aria-required="true" placeholder="Smith\MyAnimation"/>
+                </div>
+                <div class="form-control Page2">
+                  <label for="pathScene">Relative Path to Scene<abbr class="required" title="required">*</abbr></label>
+                  <input id="pathScene" type="text" name="Field_path_scene" class="listen" required aria-required="true" placeholder="Smith\MyAnimation\scenes\awesomesauce.mb"/>
+                </div>
+                <div class="form-control Page3">
+                  <label for="pathOutput">Relative Path to Output Image Directory<abbr class="required" title="required">*</abbr></label>
+                  <input id="pathOutput" type="text" name="Field_path_output" class="listen" required aria-required="true" placeholder="Smith\MyAnimation\images\firstTry" />
+                </div>
+                <div class="form-control Page4">
+                  <label for="outputFileName">Output Image Leading Text<abbr class="required" title="required">*</abbr></label>
+                  <input id="outputFileName" type="text" name="Field_output_file_name" class="listen" required aria-required="true" placeholder="awesome" />
+                </div>
+                <div class="form-control Page5">
+                  <label for="camera">Camera<abbr class="required" title="required">*</abbr></label>
+                  <input id="camera" type="text" name="Field_camera" class="listen" required aria-required="true" placeholder="persp1;top;bottom" />
+                </div>
+                <div class="form-control Page6">
+                  <label for="frames">Frames<abbr class="required" title="required">*</abbr></label>
+                  <input id="frames" type="text" name="Field_frames" class="listen" required aria-required="true" placeholder="1-20;35-79;88-240" />
+                </div>
+                <div class="form-control Page7">
+                  <label for="frameWidth">Frame Width (pixels)<abbr class="required" title="required">*</abbr></label>
+                  <input id="frameWidth" type="number" max="12000" name="Field_frame_width" class="listen" required aria-required="true" placeholder="1920" />
+                </div>
+                <div class="form-control Page8">
+                  <label for="frameHeight">Frame Height (pixels)<abbr class="required" title="required">*</abbr></label>
+                  <input id="frameHeight" type="number" max="12000" name="Field_frame_height" class="listen" required aria-required="true" placeholder="1080" />
+                </div>
+              </fieldset>
+              <button class="button" name="Button_submit" id="submitBtn" type="button">Submit</button>
+            </form>
+          </article>
+        </div>
+      </div>
     </main>
   </div>
       

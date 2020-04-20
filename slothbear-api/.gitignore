@@ -1,3 +1,4 @@
 static/web.config
 static/web.config.prod
 logs/
+jwt-decode.min.js

@@ -20,7 +20,7 @@ pub fn generate_api_key(user: &User) -> Result<String, Error> {
 }
 pub fn verify_api_key<'a>(key: &'a str) -> Result<User, Error> {
     let secret = env::var("ROCKET_KEY_SECRET").expect("Unable to find secret");
-    let (_header, payload) = decode(key, &secret, Algorithm::HS256, &ValidationOptions::dangerous())?;
+    let (_header, payload) = decode(key, &secret, Algorithm::HS256, &ValidationOptions::default())?;
     let user: User = serde_json::from_value(payload)?;
     return Ok(user);
 }

@@ -4,9 +4,9 @@ use rocket_contrib::json::Json;
 use minreq;
 use serde_xml_rs;
 
+use crate::db;
 use crate::helper;
-use crate::models::{ApiKey, CasServiceResponse, Render, RenderResponse, User};
-use crate::service::send_to_rp;
+use crate::models::{ApiKey, CasServiceResponse, NewRender, Render, User};
 
 // GET: /api
 #[openapi(skip)]
@@ -17,11 +17,15 @@ pub fn index(key: ApiKey) -> String {
 
 // POST: /api/job
 #[openapi]
-#[post("/job", format = "json", data = "<render>")]
-pub fn post_job(render: Json<Render>) -> Json<RenderResponse> {
-    let new_render = Render::from_json(render);
-    let response = send_to_rp(new_render);
-    return Json(response);
+#[post("/job", format = "json", data = "<new_render>")]
+pub fn post_job(key: ApiKey, new_render: Json<NewRender>) -> Option<Json<Render>> {
+    let render = Render::from_json(new_render, key);
+    let submitted = db::send_job_to_queue(&render);
+    if submitted {
+        return Some(Json(render));
+    } else {
+        return None;
+    }
 }
 
 // GET: /auth/login
