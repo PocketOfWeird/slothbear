@@ -310,10 +310,35 @@
             <h1 class="page-title">Your Render Jobs</h1>
           </div>
       </div>
-      <div class="loader">
+      <div class="grid_whole">
+        <div class="grid_inner">
+          <table>
+            <caption>Your Render Jobs</caption>
+            <thead>
+              <tr>
+                <th>Submitted At</th>
+                <th>Project</th>
+                <th>Scene</th>
+                <th>Image Output</th>
+                <th>Output File Name</th>
+                <th>Camera</th>
+                <th>Frames</th>
+                <th>Chunk Size</th>
+                <th>Frame Step</th>
+                <th>Frame Width</th>
+                <th>Frame Height</th>
+              </tr>
+            </thead>
+            <tbody id="renderJobsTableBody">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="loader" id="dataLoading">
         <img class="image" src="https://missouristate.info/msuwds/v2/images/loader.gif" alt="Loading spinner">
-        <p class="title">Currently Under Construction</p>
-    </div>
+        <p class="title">Loading your render jobs</p>
+      </div>
     </main>
   </div>
       

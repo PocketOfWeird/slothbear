@@ -30,8 +30,25 @@
         }
     }
     
+    function getLocalRenderJobs() {
+        var renders = window.localStorage.getItem("slothbear-renders");
+        if (!renders) {
+            renders = "{}";
+        }
+        renders = JSON.parse(renders);
+        return renders;
+    }
 
-    function getRenderJobs() {
+    function displayRenderJobs(renders) {
+        var tableBody = document.getElementById("renderJobsTableBody");
+        var ids = Object.keys(renders);
+        for (var i = 0; i < ids.length; i++) {
+            var render = renders[ids[i]];
+            
+        }    
+    }
+
+    function refreshRenderJobs() {
         var url = "/render/api/";
         var headers = { "X-API-Key": getApiKey() };
         fetch(url, { headers })
@@ -40,29 +57,26 @@
                 return response.text();
             })
             .then((data) => {
-                console.log(data);
+                //console.log(data);
             });
-        /*
-        var url = "/render/api/jobs?key=" + getApiKey();
-        fetch(url)
-            .then((response) => {
-                console.log(response.status);
-                console.log(response.status);
-                if (response.ok) {
-                    return response.json();                    
-                } else {
-                    return response.statusText;
-                }
-            })
-            .then((data) => {
-                console.log(data);
-            });
-        */
+    }
+
+    function ready(fn) {
+        if (document.readyState != 'loading') {
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
     }
 
     function main() {
         checkForApiKey();
-        getRenderJobs();
+        var renders = getLocalRenderJobs();
+        
+        ready(function() { 
+            displayRenderJobs(renders);
+            refreshRenderJobs();
+        });
     }
 
     main();
